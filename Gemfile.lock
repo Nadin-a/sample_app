@@ -225,6 +225,7 @@ DEPENDENCIES
   spring-watcher-listen
   uglifier
   web-console
+  will_paginate
 
 BUNDLED WITH
    1.16.0

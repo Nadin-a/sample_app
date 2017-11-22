@@ -11,7 +11,8 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'jbuilder'
 gem 'pg'
-# gem 'rails_12factor'
+gem 'will_paginate'
+
 
 group :development, :test do
   gem 'byebug'
