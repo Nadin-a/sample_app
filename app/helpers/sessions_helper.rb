@@ -60,3 +60,4 @@ module SessionsHelper
   end
 
 end
+
