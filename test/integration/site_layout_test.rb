@@ -30,7 +30,6 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select 'a[href=?]', contact_path
     assert_select 'a[href=?]', users_path
     assert_select 'a[href=?]', logout_path,      count: 1
-    assert_select 'a[href=?]', user_path(@user), count: 1
     assert_select 'a[href=?]', edit_user_path
     delete logout_path
     follow_redirect!
