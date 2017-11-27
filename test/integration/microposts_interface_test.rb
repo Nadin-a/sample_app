@@ -21,7 +21,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     assert_difference 'Micropost.count', 1 do
       post microposts_path, params: { micropost: { content: content, picture:'rails.png' } }
     end
-    # assert picture.picture?
+    #assert picture.picture?
     follow_redirect!
     assert_match content, response.body
     # Delete a post.

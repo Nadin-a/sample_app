@@ -45,6 +45,8 @@ class User < ApplicationRecord
             length: { minimum: 6 },
             allow_nil: true
 
+  mount_uploader :avatar, AvatarUploader
+
   # Returns the hash digest of the given string.
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
