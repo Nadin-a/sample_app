@@ -49,6 +49,28 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
+  def following
+    if logged_in?
+      @title = 'Following'
+      @user = User.find(params[:id])
+      @users = @user.following.paginate(page: params[:page])
+      render 'show_follow'
+    else
+      redirect_to login_url
+    end
+  end
+
+  def followers
+    if logged_in?
+      @title = 'Followers'
+      @user = User.find(params[:id])
+      @users = @user.followers.paginate(page: params[:page])
+      render 'show_follow'
+    else
+      redirect_to login_url
+    end
+  end
+
   private
 
   def user_params
