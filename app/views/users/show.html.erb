@@ -3,7 +3,9 @@
   <aside class="col-md-4">
     <section>
       <h1>
-        <%= gravatar_for @user %>
+        <div class="circle">
+        <%= image_tag(@user.avatar_url) if @user.avatar? %>
+        </div>
         <%= @user.name %>
       </h1>
     </section>

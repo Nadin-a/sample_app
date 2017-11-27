@@ -1,15 +1,14 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-
 /* mixins, variables, etc. */
 
 $gray-medium-light: #eaeaea;
 
 @mixin box_sizing {
-  -moz-box-sizing:    border-box;
+  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  box-sizing:         border-box;
+  box-sizing: border-box;
 }
 
 /* universal */
@@ -59,7 +58,6 @@ p {
   line-height: 1.7em;
 }
 
-
 /* header */
 
 #logo {
@@ -103,7 +101,7 @@ footer {
   }
 }
 
-  /* miscellaneous */
+/* miscellaneous */
 
 .debug_dump {
   clear: both;
@@ -187,8 +185,6 @@ aside {
 .users.follow {
   padding: 0;
 }
-
-
 
 /* forms */
 
@@ -290,3 +286,11 @@ span.picture {
     border: 0;
   }
 }
+
+.circle {
+  img {
+    border-radius: 50%;
+    margin-bottom: 7px;
+  }
+}
+

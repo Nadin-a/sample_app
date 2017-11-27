@@ -1,7 +1,0 @@
-<%= form_for @user, :html => {:multipart => true} do |f| %>
-    <p>
-      <label>My Avatar</label>
-      <%= image_tag(@user.avatar_url) if @user.avatar? #загруженая картинка, если присутствует %>
-      <%= f.file_field :avatar %>
-      <%= f.hidden_field :avatar_cache   #кешированое изображение %>
-<%= end  %>

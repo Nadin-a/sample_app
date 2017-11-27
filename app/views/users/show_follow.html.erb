@@ -10,9 +10,9 @@
     <section class="stats">
       <%= render 'shared/stats' %>
       <% if @users.any? %>
-          <div class="user_avatars">
+          <div class="circle">
             <% @users.each do |user| %>
-                <%= link_to gravatar_for(user, size: 30), user %>
+                <%= image_tag(user.avatar_url) if user.avatar? %>
             <% end %>
           </div>
       <% end %>

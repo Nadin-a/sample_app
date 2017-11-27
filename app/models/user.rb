@@ -45,6 +45,8 @@ class User < ApplicationRecord
             length: { minimum: 6 },
             allow_nil: true
 
+  validate  :avatar_size
+
   mount_uploader :avatar, AvatarUploader
 
   # Returns the hash digest of the given string.
@@ -135,6 +137,13 @@ class User < ApplicationRecord
   def create_activation_digest
     self.activation_token = User.new_token
     self.activation_digest = User.digest(activation_token)
+  end
+
+  # Validates the size of an uploaded picture.
+  def avatar_size
+    if avatar.size > 3.megabytes
+      errors.add(:avatar, 'should be less than 3MB')
+    end
   end
 
 end

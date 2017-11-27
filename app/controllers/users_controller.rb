@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_create_params)
     if @user.save
       @user.send_activation_email
       flash[:info] = 'Please check your email to activate your account.'
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
+    if @user.update(user_update_params)
       flash[:success] = 'Profile updated'
       redirect_to @user
     else
@@ -73,9 +73,14 @@ class UsersController < ApplicationController
 
   private
 
-  def user_params
+  def user_create_params
     params.require(:user).permit(:name, :email, :password,
                                  :password_confirmation)
+  end
+
+  def user_update_params
+    params.require(:user).permit(:name, :email, :password,
+                                 :password_confirmation, :avatar)
   end
 
   # Before filters
