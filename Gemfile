@@ -28,6 +28,10 @@ group :development do
   gem 'spring-watcher-listen'
 end
 
+group :production do
+  gem 'rails_12factor'
+end
+
 group :test do
   gem 'rails-controller-testing'
   gem 'minitest-reporters'
