@@ -11,6 +11,7 @@ gem 'mini_magick'
 gem 'rails', '~> 5.1.2'
 gem 'puma'
 gem 'sass-rails'
+gem 'scss_lint'
 gem 'uglifier'
 
 gem 'pg'
