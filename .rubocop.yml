@@ -1,4 +1,15 @@
+AbcSize:
+  Max: 25
+ClassLength:
+  Max: 250
+MethodLength:
+   Max: 50
+LineLength:
+   Max: 120
+
 Documentation:
+  Enabled: false
+Style/ClassAndModuleChildren:
   Enabled: false
 
 AllCops:
