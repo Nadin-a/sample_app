@@ -1,28 +1,28 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   has_many :microposts,
            dependent: :destroy
 
   has_many :active_relationships,
            class_name:  'Relationship',
-           foreign_key: 'follower_id',
+           foreign_key: :follower_id,
            dependent:   :destroy
 
   has_many :passive_relationships,
            class_name:  'Relationship',
-           foreign_key: 'followed_id',
+           foreign_key: :followed_id,
            dependent:   :destroy
 
-  has_many :following, #source of array following is a bunch of followed ids.
+  has_many :following, # source of array following is a bunch of followed ids.
            through: :active_relationships,
            source: :followed
 
-  has_many :followers, #array
+  has_many :followers, # array
            through: :passive_relationships,
            source: :follower
-
-
   attr_accessor :remember_token, :activation_token, :reset_token
 
   has_secure_password
@@ -37,7 +37,7 @@ class User < ApplicationRecord
   validates :email,
             presence: true,
             length: { maximum: 255 },
-            format: {with: VALID_EMAIL_REGEX},
+            format: { with: VALID_EMAIL_REGEX },
             uniqueness: { case_sensitive: false }
 
   validates :password,
@@ -51,7 +51,12 @@ class User < ApplicationRecord
 
   # Returns the hash digest of the given string.
   def self.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+    cost =
+      if ActiveModel::SecurePassword.min_cost
+        BCrypt::Engine::MIN_COST
+      else
+        BCrypt::Engine.cost
+      end
     BCrypt::Password.create(string, cost: cost)
   end
 
@@ -67,8 +72,8 @@ class User < ApplicationRecord
   end
 
   # Returns true if the given token matches the digest.
-  def authenticated?(attribute, token) # self.remember_digest, self.activation_digest
-    digest = send("#{attribute}_digest")
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest") # remember or activated
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
@@ -103,16 +108,14 @@ class User < ApplicationRecord
 
   # Returns true if a password reset has expired.
   def password_reset_expired?
-    reset_sent_at < 2.hours.ago #Password reset sent earlier than two hours ago.
+    reset_sent_at < 2.hours.ago # Password reset sent earlier than two hours ago
   end
 
   # Returns a user's status feed.
   def feed
-    following_ids = 'SELECT followed_id FROM relationships
-                     WHERE  follower_id = :user_id'
-    Micropost.where("user_id IN (#{following_ids})
-                     OR user_id = :user_id", user_id: id)
+    Micropost.where(user_id: following.ids.push(id))
   end
+
   # Follows a user.
   def follow(other_user)
     following << other_user
@@ -141,10 +144,6 @@ class User < ApplicationRecord
 
   # Validates the size of an uploaded picture.
   def avatar_size
-    if avatar.size > 3.megabytes
-      errors.add(:avatar, 'should be less than 3MB')
-    end
+    errors.add(:avatar, 'should be less than 3MB') if avatar.size > 3.megabytes
   end
-
 end
-

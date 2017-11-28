@@ -1,5 +1,6 @@
-class AvatarUploader < CarrierWave::Uploader::Base
+# frozen_string_literal: true
 
+class AvatarUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   process resize_to_fit: [200, 200]
@@ -19,12 +20,10 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def content_type_whitelist
-    /image\//
+    %r{image\/}
   end
 
   version :thumb do
     process resize_to_fit: [50, 50]
   end
-
-
 end

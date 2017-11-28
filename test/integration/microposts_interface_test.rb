@@ -1,11 +1,10 @@
+# frozen_string_literal: true
+
 require 'test_helper'
-
 class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
-
   def setup
     @user = users(:michael)
   end
-
 
   test 'micropost interface' do
     log_in_as(@user)
@@ -13,28 +12,31 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     assert_select 'div.pagination'
     assert_select 'input[type=file]'
     # Invalid submission
-    post microposts_path,params: { micropost: { content: '' } }
+    post microposts_path, params: { micropost: { content: '' } }
     assert_select 'div#error_explanation'
     # Valid submission
     content = 'This micropost really ties the room together'
-    picture = fixture_file_upload('rails.png', 'image/png')
     assert_difference 'Micropost.count', 1 do
-      post microposts_path, params: { micropost: { content: content, picture:'rails.png' } }
+      post microposts_path, params: {
+        micropost:
+        {
+          content: content,
+          picture: 'rails.png'
+        }
+      }
     end
-    #assert picture.picture?
+    # assert picture.picture?
     follow_redirect!
     assert_match content, response.body
     # Delete a post.
     assert_select 'a', 'delete'
-    first_micropost = @user.microposts.paginate(page: 1).first
     assert_difference 'Micropost.count', -1 do
-      delete micropost_path(first_micropost)
+      delete micropost_path(@user.microposts.paginate(page: 1).first)
     end
     # Visit a different user.
     get user_path(users(:archer))
-    assert_select 'a', { text: 'delete', count: 0 }
+    assert_select 'a', text: 'delete', count: 0
   end
-
 
   test 'micropost sidebar count' do
     log_in_as(@user)
@@ -49,7 +51,4 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     get root_path
     assert_match root_path, response.body
   end
-
-
-
 end

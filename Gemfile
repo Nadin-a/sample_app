@@ -1,17 +1,18 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.1.2'
 gem 'bcrypt'
-gem 'carrierwave'
-gem 'mini_magick'
-gem 'fog'
-gem 'bootstrap-will_paginate'
 gem 'bootstrap-sass'
+gem 'bootstrap-will_paginate'
+gem 'carrierwave'
+gem 'fog'
+gem 'jbuilder'
+gem 'jquery-rails'
+gem 'mini_magick'
+gem 'rails', '~> 5.1.2'
 gem 'puma'
 gem 'sass-rails'
 gem 'uglifier'
-gem 'jquery-rails'
-gem 'jbuilder'
+
 gem 'pg'
 gem 'will_paginate'
 
@@ -22,10 +23,11 @@ group :development, :test do
 end
 
 group :development do
-  gem 'web-console'
   gem 'listen'
+  gem 'rubocop'
   gem 'spring'
   gem 'spring-watcher-listen'
+  gem 'web-console'
 end
 
 group :production do
@@ -33,8 +35,8 @@ group :production do
 end
 
 group :test do
-  gem 'rails-controller-testing'
-  gem 'minitest-reporters'
   gem 'guard'
   gem 'guard-minitest'
+  gem 'minitest-reporters'
+  gem 'rails-controller-testing'
 end

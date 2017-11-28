@@ -1,7 +1,7 @@
 require 'test_helper'
+# frozen_string_literal: true
 
 class FollowingTest < ActionDispatch::IntegrationTest
-
   def setup
     @user = users(:michael)
     @other = users(:archer)
@@ -53,12 +53,10 @@ class FollowingTest < ActionDispatch::IntegrationTest
       delete relationship_path(relationship), xhr: true
     end
   end
-
   # test 'feed on Home page' do
   #   get root_path
   #   @user.feed.paginate(page: 1).each do |micropost|
   #     assert_match CGI.escapeHTML(FILL_IN), FILL_IN
   #   end
   # end
-
 end

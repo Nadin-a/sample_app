@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class MicropostsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy] # only logged in user can delete
+  before_action :logged_in_user, only: %i[create destroy]
   before_action :correct_user,   only: :destroy # only owner can delete
 
   def create
@@ -16,8 +18,8 @@ class MicropostsController < ApplicationController
   def destroy
     @micropost.destroy
     flash[:success] = 'Micropost deleted'
-    redirect_to request.referrer || root_url # we arrange to redirect back to the page
-  end                                          # issuing the delete request in both cases.
+    redirect_to request.referrer || root_url
+  end
 
   private
 
@@ -29,5 +31,4 @@ class MicropostsController < ApplicationController
     @micropost = current_user.microposts.find_by(id: params[:id])
     redirect_to root_url if @micropost.nil?
   end
-
 end

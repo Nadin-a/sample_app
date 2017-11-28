@@ -1,7 +1,7 @@
 require 'test_helper'
+# frozen_string_literal: true
 
 class MicropostTest < ActiveSupport::TestCase
-
   def setup
     @user = users(:michael)
     @micropost = @user.microposts.build(content: 'Lorem ipsum')
@@ -12,7 +12,7 @@ class MicropostTest < ActiveSupport::TestCase
   end
 
   test 'user id should be present' do
-    @micropost.user_id = nil
+    @micropost.user = nil
     assert_not @micropost.valid?
   end
 
@@ -29,5 +29,4 @@ class MicropostTest < ActiveSupport::TestCase
   test 'order should be most recent first' do
     assert_equal microposts(:most_recent), Micropost.first
   end
-
 end

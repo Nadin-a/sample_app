@@ -1,4 +1,5 @@
 require 'test_helper'
+# frozen_string_literal: true
 
 class UsersIndexTest < ActionDispatch::IntegrationTest
   def setup
@@ -17,9 +18,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
       unless user == @admin
         assert_select 'a[href=?]', user_path(user), text: 'delete'
       end
-      unless user.activated
-        assert_select 'a[href=?]', ''
-      end
+      assert_select 'a[href=?]', '' unless user.activated
     end
     assert_difference 'User.count', -1 do
       delete user_path(@non_admin)
@@ -32,4 +31,3 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     assert_select 'a', text: 'delete', count: 0
   end
 end
-

@@ -1,4 +1,5 @@
 require 'test_helper'
+# frozen_string_literal: true
 
 class ApplicationHelperTest < ActionView::TestCase
   test 'full title helper' do

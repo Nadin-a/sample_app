@@ -1,7 +1,8 @@
-class UsersController < ApplicationController
+# frozen_string_literal: true
 
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update] # only owner can update
+class UsersController < ApplicationController
+  before_action :logged_in_user, only: %i[index edit update destroy]
+  before_action :correct_user, only: %i[edit update] # only owner can update
   before_action :admin_user, only: :destroy # only admin can destoy
 
   def index
@@ -9,9 +10,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
-    @user.activated ? @user : redirect_to(root_url)
+    if logged_in?
+      @user = User.find(params[:id])
+      @microposts = @user.microposts.paginate(page: params[:page])
+      @user.activated ? @user : redirect_to(root_url)
+    else
+      redirect_to(root_url)
+    end
   end
 
   def new
@@ -95,6 +100,4 @@ class UsersController < ApplicationController
   def admin_user
     redirect_to(root_url) unless current_user.admin?
   end
-
 end
-
