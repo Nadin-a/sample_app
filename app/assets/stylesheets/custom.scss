@@ -119,15 +119,6 @@ footer {
   }
 }
 
-// miscellaneous
-
-.debug_dump {
-  @include mbox-sizing;
-  clear: both;
-  float: left;
-  margin-top: 45px;
-  width: 100%;
-}
 
 // sidebar
 
@@ -296,4 +287,8 @@ span {
     margin-bottom: 7px;
   }
 }
+
+
+
+
 
